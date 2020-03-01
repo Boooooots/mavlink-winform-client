@@ -50,6 +50,7 @@ namespace MavLink
         public static Dictionary<int, MavPacketInfo> Lookup = new Dictionary<int, MavPacketInfo>
         {
 			{0, new MavPacketInfo(Deserialize_HEARTBEAT, 50)},
+			{30, new MavPacketInfo(Deserialize_ATTITUDE, 39)},
 		};
 
 		internal static MavlinkMessage Deserialize_HEARTBEAT(byte[] bytes, int offset)
@@ -65,6 +66,20 @@ namespace MavLink
 			};
 		}
 
+		internal static MavlinkMessage Deserialize_ATTITUDE(byte[] bytes, int offset)
+		{
+			return new Msg_attitude
+			{
+				time_boot_ms = bitconverter.ToUInt32(bytes, offset + 0),
+				roll = bitconverter.ToSingle(bytes, offset + 4),
+				pitch = bitconverter.ToSingle(bytes, offset + 8),
+				yaw = bitconverter.ToSingle(bytes, offset + 12),
+				rollspeed = bitconverter.ToSingle(bytes, offset + 16),
+				pitchspeed = bitconverter.ToSingle(bytes, offset + 20),
+				yawspeed = bitconverter.ToSingle(bytes, offset + 24),
+			};
+		}
+
 		internal static int Serialize_HEARTBEAT(this Msg_heartbeat msg, byte[] bytes, ref int offset)
 		{
 			bitconverter.GetBytes(msg.custom_mode, bytes, offset + 0);
@@ -75,6 +90,19 @@ namespace MavLink
 			bytes[offset + 8] = msg.mavlink_version;
 			offset += 9;
 			return 0;
+		}
+
+		internal static int Serialize_ATTITUDE(this Msg_attitude msg, byte[] bytes, ref int offset)
+		{
+			bitconverter.GetBytes(msg.time_boot_ms, bytes, offset + 0);
+			bitconverter.GetBytes(msg.roll, bytes, offset + 4);
+			bitconverter.GetBytes(msg.pitch, bytes, offset + 8);
+			bitconverter.GetBytes(msg.yaw, bytes, offset + 12);
+			bitconverter.GetBytes(msg.rollspeed, bytes, offset + 16);
+			bitconverter.GetBytes(msg.pitchspeed, bytes, offset + 20);
+			bitconverter.GetBytes(msg.yawspeed, bytes, offset + 24);
+			offset += 28;
+			return 30;
 		}
 	}
 

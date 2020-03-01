@@ -11,11 +11,11 @@ using System;
     
 using System.Reflection;    
     
-[assembly: AssemblyTitle("Mavlink Classes")]
-[assembly: AssemblyDescription("Generated Message Classes for Mavlink. See http://qgroundcontrol.org/mavlink/start")]
-[assembly: AssemblyProduct("Mavlink")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+//[assembly: AssemblyTitle("Mavlink Classes")]
+//[assembly: AssemblyDescription("Generated Message Classes for Mavlink. See http://qgroundcontrol.org/mavlink/start")]
+//[assembly: AssemblyProduct("Mavlink")]
+//[assembly: AssemblyVersion("1.0.0.0")]
+//[assembly: AssemblyFileVersion("1.0.0.0")]
 
     namespace MavLink
 {
@@ -71,6 +71,54 @@ namespace MavLink
         public override int Serialize(byte[] bytes, ref int offset)
             {
                 return MavLinkSerializer.Serialize_HEARTBEAT(this, bytes, ref offset);
+            }        
+	}
+
+
+	/// <summary>
+	/// The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right).
+	/// </summary>
+	public class Msg_attitude : MavlinkMessage
+    {
+
+		/// <summary>
+		/// Timestamp (time since system boot).
+		/// </summary>
+		public UInt32 time_boot_ms;
+
+		/// <summary>
+		/// Roll angle (-pi..+pi)
+		/// </summary>
+		public float roll;
+
+		/// <summary>
+		/// Pitch angle (-pi..+pi)
+		/// </summary>
+		public float pitch;
+
+		/// <summary>
+		/// Yaw angle (-pi..+pi)
+		/// </summary>
+		public float yaw;
+
+		/// <summary>
+		/// Roll angular speed
+		/// </summary>
+		public float rollspeed;
+
+		/// <summary>
+		/// Pitch angular speed
+		/// </summary>
+		public float pitchspeed;
+
+		/// <summary>
+		/// Yaw angular speed
+		/// </summary>
+		public float yawspeed;
+
+        public override int Serialize(byte[] bytes, ref int offset)
+            {
+                return MavLinkSerializer.Serialize_ATTITUDE(this, bytes, ref offset);
             }        
 	}
 
