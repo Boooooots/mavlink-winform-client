@@ -26,6 +26,11 @@ namespace mavlinkWinformClient
             
             Console.WriteLine("mavMsg: " + e.Message);
         }
+
+        public void rxThreadFunc()
+        {
+            Console.WriteLine("rxThreadFunc");
+        }
         
     }
 }

@@ -123,6 +123,7 @@ namespace mavlinkWinformClient
             connect.Text = "Connect";
         }
 
+        /* start work thread */
         private void connect_Click(object sender, EventArgs e)
         {
             if (connect.Text == "Connect")
